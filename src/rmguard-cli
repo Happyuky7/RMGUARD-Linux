@@ -2,7 +2,7 @@
 # rmguard-cli — Command line interface for rmguard
 set -euo pipefail
 
-VERSION="0.0.1"
+VERSION="0.0.2"
 GITHUB_REPO="Happyuky7/RMGUARD-Linux"
 GITHUB_API="https://api.github.com/repos/$GITHUB_REPO/releases/latest"
 
@@ -172,9 +172,10 @@ show_status() {
   
   echo ""
   
-  # Check if rm is a function
-  if type rm 2>/dev/null | grep -q "function"; then
-    echo "✅ rmguard is ACTIVE (rm is a shell function)"
+  # External commands cannot inspect parent-shell functions directly, so the
+  # profile hook exports this marker when it loads the rm wrapper.
+  if [[ "${RM_GUARD_SHELL_LOADED:-0}" == "1" ]]; then
+    echo "✅ rmguard is ACTIVE in this shell"
     echo "   Current RM_GUARD value: ${RM_GUARD:-not set}"
   else
     echo "⚠️  rmguard is NOT active in this shell"

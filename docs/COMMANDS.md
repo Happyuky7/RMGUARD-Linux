@@ -217,6 +217,11 @@ Defines which top-level paths are allowed (set in config file).
 ALLOW_TOPLEVEL="/tmp /var/tmp"
 ```
 
+### `RM_GUARD_SHELL_LOADED`
+
+Internal marker exported by `/etc/profile.d/rmguard.sh` when rmguard is loaded
+in the current interactive shell.
+
 ---
 
 ## Configuration File
@@ -263,10 +268,10 @@ source /etc/profile
 
 ```bash
 # From .deb
-sudo apt install ./rmguard_0.0.1_all.deb
+sudo apt install ./rmguard_0.0.2_all.deb
 
 # From source
-sudo ./scripts/install.sh
+sudo bash ./scripts/install.sh
 ```
 
 ### Activate
@@ -341,4 +346,4 @@ sudo bash ./test/rmguard_test.sh
 ---
 
 **Last Updated**: May 24, 2026  
-**Version**: 0.0.1
+**Version**: 0.0.2

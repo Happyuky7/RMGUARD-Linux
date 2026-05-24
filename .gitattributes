@@ -1,0 +1,8 @@
+*.md text eol=lf
+*.sh text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+src/rmguard text eol=lf
+src/rmguard-cli text eol=lf
+etc/profile.d/*.sh text eol=lf
+test/*.sh text eol=lf

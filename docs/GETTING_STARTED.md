@@ -15,15 +15,18 @@ rmguard.
 ```bash
 git clone https://github.com/Happyuky7/RMGUARD-Linux.git
 cd RMGUARD-Linux
-sudo ./scripts/install.sh
+chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+sudo bash ./scripts/install.sh
 source /etc/profile
 ```
 
 ## Install From Release Package
 
+Use this only if the `.deb` asset has been uploaded to the release.
+
 ```bash
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/download/v0.0.1/rmguard_0.0.1_all.deb
-sudo apt install ./rmguard_0.0.1_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/download/v0.0.2/rmguard_0.0.2_all.deb
+sudo apt install ./rmguard_0.0.2_all.deb
 source /etc/profile
 ```
 
@@ -35,8 +38,8 @@ rmguard --status
 type rm
 ```
 
-`type rm` should show that `rm` is a shell function in the current
-interactive shell.
+`type rm` may show the friendly alias first. `rmguard --status` should report
+that rmguard is active in the current shell.
 
 ## Try It Safely
 
@@ -72,28 +75,28 @@ Then open a new shell or run:
 source /etc/profile
 ```
 
-## Build v0.0.1 Package
+## Build v0.0.2 Package
 
 ```bash
-./scripts/package.sh 0.0.1
+bash ./scripts/package.sh 0.0.2
 ```
 
 The package is created at:
 
 ```text
-build/rmguard_0.0.1_all.deb
+build/rmguard_0.0.2_all.deb
 ```
 
-## Prepare v0.0.1 Release
+## Prepare v0.0.2 Release
 
 ```bash
-./scripts/release.sh 0.0.1
+bash ./scripts/release.sh 0.0.2
 ```
 
 Before publishing, check:
 
-- `rmguard --version` prints `0.0.1`
+- `rmguard --version` prints `0.0.2`
 - `rmguard --status` works after install
 - Dangerous top-level paths are blocked
 - `/tmp` and `/var/tmp` still work
-- `CHANGELOG.md` and `docs/releases/v0.0.1.md` match the release
+- `CHANGELOG.md` and `docs/releases/v0.0.2.md` match the release

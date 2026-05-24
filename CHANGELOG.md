@@ -2,6 +2,24 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.2] - 2026-05-24
+
+Patch pre-release after the first Linux install test.
+
+### Fixed
+
+- Prevented `/etc/profile.d/rmguard.sh` from failing when an existing `rm`
+  alias is already loaded before rmguard.
+- Fixed `rmguard --status` false negatives by exporting a shell-loaded marker
+  from `/etc/profile.d/rmguard.sh`.
+- Updated install documentation to use `sudo bash ./scripts/install.sh`, so
+  installation works even if shell scripts are cloned without executable mode.
+
+### Changed
+
+- Updated release, package, and documentation defaults to `0.0.2`.
+- Added explicit `chmod +x` setup commands for source installs.
+
 ## [0.0.1] - 2026-05-24
 
 Initial public pre-release for validation before a future `1.0.0`.

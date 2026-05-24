@@ -40,22 +40,23 @@
 
 ```bash
 git clone https://github.com/Happyuky7/RMGUARD-Linux.git
-cd RMGUARD-Linux/scripts
-sudo ./install.sh
+cd RMGUARD-Linux
+chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+sudo bash ./scripts/install.sh
 # 在当前会话中激活或打开新会话：
 source /etc/profile
 ```
 
 ### 方法 2：从 .deb 包安装
 
-从 [Releases](https://github.com/Happyuky7/RMGUARD-Linux/releases) 下载最新的 `.deb` 包并安装：
+如果 release 附带 `.deb` 包，请从 [Releases](https://github.com/Happyuky7/RMGUARD-Linux/releases) 下载并安装：
 
 ```bash
 # 下载最新版本
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.1_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.2_all.deb
 
 # 安装
-sudo apt install ./rmguard_0.0.1_all.deb
+sudo apt install ./rmguard_0.0.2_all.deb
 
 # 在当前会话中激活（仅一次）
 source /etc/profile
@@ -69,7 +70,7 @@ rmguard --status
 
 # 或手动验证
 type rm
-# 应该显示：rm 是一个 shell 函数
+# 可能先显示 rmguard alias；rmguard --status 应报告 ACTIVE。
 ```
 
 ---
@@ -231,7 +232,7 @@ rmguard --status
 
 # 方法 2：手动检查
 type rm
-# 预期输出："rm 是一个 shell 函数"
+# 可能先显示 rmguard alias；rmguard --status 应报告 ACTIVE。
 
 # 方法 3：查看环境变量
 echo $RM_GUARD
@@ -249,7 +250,7 @@ echo $RM_GUARD
 打开新会话或运行 `source /etc/profile`。使用以下命令验证：
 
 ```bash
-type rm   # 应该显示：rm 是一个 shell 函数 …
+type rm   # 可能先显示 rmguard alias
 ```
 
 ### "我需要允许另一个顶级路径"
@@ -277,7 +278,7 @@ rmguard/
 ├─ scripts/
 │  ├─ install.sh              # 手动安装（git clone）
 │  ├─ uninstall.sh            # 手动卸载
-│  └─ package.sh              # 生成 rmguard_0.0.1_all.deb
+│  └─ package.sh              # 生成 rmguard_0.0.2_all.deb
 ├─ test/
 │  └─ rmguard_test.sh         # 快速测试
 ├─ README.md                  # 英文文档
@@ -311,17 +312,16 @@ rmguard/
 如果您想自己构建 `.deb` 包：
 
 ```bash
-cd rmguard/scripts
-./package.sh 0.0.1
+bash ./scripts/package.sh 0.0.2
 
 # 包将创建在：
-# build/rmguard_0.0.1_all.deb
+# build/rmguard_0.0.2_all.deb
 ```
 
 创建发布版本：
 
 ```bash
-./scripts/release.sh 0.0.1
+bash ./scripts/release.sh 0.0.2
 ```
 
 ---

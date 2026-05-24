@@ -28,8 +28,9 @@ rmguard --version
 
 ```bash
 git clone -b v{VERSION} https://github.com/Happyuky7/RMGUARD-Linux.git
-cd RMGUARD-Linux/scripts
-sudo ./install.sh
+cd RMGUARD-Linux
+chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+sudo bash ./scripts/install.sh
 source /etc/profile
 ```
 
@@ -75,8 +76,8 @@ sudo apt install ./rmguard_{VERSION}_all.deb
 cd /path/to/RMGUARD-Linux
 git pull
 git checkout v{VERSION}
-cd scripts
-sudo ./install.sh
+chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+sudo bash ./scripts/install.sh
 ```
 
 ---

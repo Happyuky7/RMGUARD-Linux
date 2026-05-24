@@ -40,22 +40,24 @@ It loads only in interactive shells (e.g., when a person is on SSH/TTY) and allo
 
 ```bash
 git clone https://github.com/Happyuky7/RMGUARD-Linux.git
-cd RMGUARD-Linux/scripts
-sudo ./install.sh
+cd RMGUARD-Linux
+chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+sudo bash ./scripts/install.sh
 # Activate it in the current session or open a new one:
 source /etc/profile
 ```
 
 ### Method 2: Install from .deb package
 
-Download the latest `.deb` package from [Releases](https://github.com/Happyuky7/RMGUARD-Linux/releases) and install:
+If a `.deb` package is attached to the release, download it from
+[Releases](https://github.com/Happyuky7/RMGUARD-Linux/releases) and install:
 
 ```bash
 # Download the latest release
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.1_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.2_all.deb
 
 # Install
-sudo apt install ./rmguard_0.0.1_all.deb
+sudo apt install ./rmguard_0.0.2_all.deb
 
 # Activate it in the current session (only once)
 source /etc/profile
@@ -69,7 +71,7 @@ rmguard --status
 
 # Or verify manually
 type rm
-# Should show: rm is a shell function
+# May show the rmguard alias first; rmguard --status should report ACTIVE.
 ```
 
 ---
@@ -231,7 +233,7 @@ rmguard --status
 
 # Method 2: Check manually
 type rm
-# Expected output: "rm is a shell function"
+# May show the rmguard alias first; rmguard --status should report ACTIVE.
 
 # Method 3: Check environment variable
 echo $RM_GUARD
@@ -249,7 +251,7 @@ If it uses `/bin/rm` (absolute path) or `command rm`, it bypasses the shell func
 Open a new session or run `source /etc/profile`. Verify with:
 
 ```bash
-type rm   # should show: rm is a shell function …
+type rm   # may show the rmguard alias first
 ```
 
 ### "I need to allow another top-level path"
@@ -277,7 +279,7 @@ rmguard/
 ├─ scripts/
 │  ├─ install.sh              # manual installation (git clone)
 │  ├─ uninstall.sh            # manual uninstallation
-│  └─ package.sh              # generates rmguard_0.0.1_all.deb
+│  └─ package.sh              # generates rmguard_0.0.2_all.deb
 ├─ test/
 │  └─ rmguard_test.sh         # quick tests
 ├─ README.md                  # documentation (English)
@@ -311,17 +313,16 @@ Contributions are welcome! Please:
 If you want to build the `.deb` package yourself:
 
 ```bash
-cd rmguard/scripts
-./package.sh 0.0.1
+bash ./scripts/package.sh 0.0.2
 
 # The package will be created at:
-# build/rmguard_0.0.1_all.deb
+# build/rmguard_0.0.2_all.deb
 ```
 
 For creating releases:
 
 ```bash
-./scripts/release.sh 0.0.1
+bash ./scripts/release.sh 0.0.2
 ```
 
 ---

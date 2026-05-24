@@ -40,22 +40,24 @@ Se carga solo en shells interactivos (p. ej., cuando una persona está en SSH/TT
 
 ```bash
 git clone https://github.com/Happyuky7/RMGUARD-Linux.git
-cd RMGUARD-Linux/scripts
-sudo ./install.sh
+cd RMGUARD-Linux
+chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+sudo bash ./scripts/install.sh
 # Actívalo en la sesión actual o abre una nueva:
 source /etc/profile
 ```
 
 ### Método 2: Instalar desde paquete .deb
 
-Descarga el último paquete `.deb` desde [Releases](https://github.com/Happyuky7/RMGUARD-Linux/releases) e instala:
+Si la release tiene un paquete `.deb` adjunto, descárgalo desde
+[Releases](https://github.com/Happyuky7/RMGUARD-Linux/releases) e instala:
 
 ```bash
 # Descarga la última versión
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.1_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.2_all.deb
 
 # Instalar
-sudo apt install ./rmguard_0.0.1_all.deb
+sudo apt install ./rmguard_0.0.2_all.deb
 
 # Activarlo en la sesión actual (solo una vez)
 source /etc/profile
@@ -69,7 +71,7 @@ rmguard --status
 
 # O verificar manualmente
 type rm
-# Debería mostrar: rm es una función shell
+# Puede mostrar primero el alias de rmguard; rmguard --status debe reportar ACTIVE.
 ```
 
 ---
@@ -231,7 +233,7 @@ rmguard --status
 
 # Método 2: Verificar manualmente
 type rm
-# Salida esperada: "rm es una función shell"
+# Puede mostrar primero el alias de rmguard; rmguard --status debe reportar ACTIVE.
 
 # Método 3: Ver variable de entorno
 echo $RM_GUARD
@@ -249,7 +251,7 @@ Si usa `/bin/rm` (ruta absoluta) o `command rm`, evita la función shell. **Reco
 Abre una nueva sesión o ejecuta `source /etc/profile`. Verifica con:
 
 ```bash
-type rm   # debería mostrar: rm es una función shell …
+type rm   # puede mostrar primero el alias de rmguard
 ```
 
 ### "Necesito permitir otra ruta de primer nivel"
@@ -277,7 +279,7 @@ rmguard/
 ├─ scripts/
 │  ├─ install.sh              # instalación manual (git clone)
 │  ├─ uninstall.sh            # desinstalación manual
-│  └─ package.sh              # genera rmguard_0.0.1_all.deb
+│  └─ package.sh              # genera rmguard_0.0.2_all.deb
 ├─ test/
 │  └─ rmguard_test.sh         # pruebas rápidas
 ├─ README.md                  # documentación en inglés
@@ -311,17 +313,16 @@ rmguard/
 Si quieres construir el paquete `.deb` tú mismo:
 
 ```bash
-cd rmguard/scripts
-./package.sh 0.0.1
+bash ./scripts/package.sh 0.0.2
 
 # El paquete se creará en:
-# build/rmguard_0.0.1_all.deb
+# build/rmguard_0.0.2_all.deb
 ```
 
 Para crear releases:
 
 ```bash
-./scripts/release.sh 0.0.1
+bash ./scripts/release.sh 0.0.2
 ```
 
 ---
