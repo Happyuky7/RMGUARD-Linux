@@ -1,0 +1,39 @@
+# Build and package output
+build/
+dist/
+out/
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+
+# Temporary files
+*.tmp
+*.swp
+*~
+.DS_Store
+tmp/
+temp/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# Test artifacts
+/tmp/x.*
+
+# Local environment and private release notes
+.env
+.env.*
+*.local
+*.local.md
+UPDATES.local.md
+RELEASE_NOTES.local.md
+
+# Logs and caches
+*.log
+.cache/
+coverage/
+
+ideas/

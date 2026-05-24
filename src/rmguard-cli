@@ -1,0 +1,208 @@
+#!/usr/bin/env bash
+# rmguard-cli — Command line interface for rmguard
+set -euo pipefail
+
+VERSION="0.0.1"
+GITHUB_REPO="Happyuky7/RMGUARD-Linux"
+GITHUB_API="https://api.github.com/repos/$GITHUB_REPO/releases/latest"
+
+show_help() {
+  cat <<'EOF'
+rmguard - Protection against dangerous rm commands
+
+USAGE:
+  rmguard [OPTIONS]
+
+OPTIONS:
+  -h, --help              Show this help message
+  -v, --version           Show version information
+  -c, --check-updates     Check for available updates
+  -s, --status            Show rmguard status
+  
+EXAMPLES:
+  rmguard --help          Display help
+  rmguard --version       Show current version
+  rmguard --check-updates Check if a new version is available
+  rmguard --status        Check if rmguard is active
+
+CONFIGURATION:
+  Config file: /etc/rmguard.conf
+  
+  Edit the configuration:
+    sudo nano /etc/rmguard.conf
+  
+  Reload configuration:
+    source /etc/profile
+
+FORCING RM:
+  If you need to bypass rmguard:
+    RM_GUARD=0 rm -rf /path
+  Or:
+    rm --no-guard -rf /path
+
+MORE INFO:
+  Repository: https://github.com/$GITHUB_REPO
+  Issues:     https://github.com/$GITHUB_REPO/issues
+
+EOF
+}
+
+show_version() {
+  echo "rmguard version $VERSION"
+  echo "Copyright (c) 2025 Happyuky7"
+  echo "License: MIT"
+  echo "Repository: https://github.com/$GITHUB_REPO"
+}
+
+check_updates() {
+  echo "Checking for updates..."
+  echo "Current version: $VERSION"
+  echo ""
+  
+  if ! command -v curl >/dev/null 2>&1; then
+    echo "Error: curl is not installed. Please install curl to check for updates."
+    echo "  sudo apt install curl"
+    exit 1
+  fi
+  
+  # Get latest release from GitHub API
+  LATEST_VERSION=$(curl -s "$GITHUB_API" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | sed 's/^v//')
+  
+  if [[ -z "$LATEST_VERSION" ]]; then
+    echo "⚠️  Could not check for updates. Please verify your internet connection."
+    echo "   or check manually: https://github.com/$GITHUB_REPO/releases"
+    exit 1
+  fi
+  
+  echo "Latest version:  $LATEST_VERSION"
+  echo ""
+  
+  if [[ "$VERSION" == "$LATEST_VERSION" ]]; then
+    echo "✅ You have the latest version!"
+  else
+    echo "🔔 New version available: $LATEST_VERSION"
+    echo ""
+    echo "Release notes: https://github.com/$GITHUB_REPO/releases/latest"
+    echo ""
+    
+    # Ask if user wants to install the update
+    read -p "Do you want to install this update now? (y/N): " -n 1 -r
+    echo
+    
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo ""
+      echo "📦 Installing update..."
+      echo ""
+      
+      # Check if we need sudo
+      if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+        echo "⚠️  Root privileges required for installation."
+        echo "   This script will use 'sudo' for the installation."
+        echo ""
+      fi
+      
+      # Create temp directory
+      TEMP_DIR=$(mktemp -d)
+      cd "$TEMP_DIR"
+      
+      echo "1/4 Downloading rmguard v$LATEST_VERSION..."
+      if ! git clone --depth 1 --branch "v$LATEST_VERSION" "https://github.com/$GITHUB_REPO.git" rmguard 2>/dev/null; then
+        echo "   ⚠️  Tag v$LATEST_VERSION not found, trying without 'v' prefix..."
+        if ! git clone --depth 1 --branch "$LATEST_VERSION" "https://github.com/$GITHUB_REPO.git" rmguard 2>/dev/null; then
+          echo "   ⚠️  Version tag not found, downloading latest from main branch..."
+          git clone --depth 1 "https://github.com/$GITHUB_REPO.git" rmguard
+        fi
+      fi
+      
+      echo "2/4 Entering directory..."
+      cd rmguard/scripts
+      
+      echo "3/4 Running installation..."
+      if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+        sudo ./install.sh
+      else
+        ./install.sh
+      fi
+      
+      echo "4/4 Cleaning up..."
+      cd /
+      rm -rf "$TEMP_DIR"
+      
+      echo ""
+      echo "✅ Update completed successfully!"
+      echo "   Run 'source /etc/profile' or open a new shell to use the updated version."
+      echo ""
+      echo "   Verify with: rmguard --version"
+    else
+      echo ""
+      echo "Update cancelled. To update manually:"
+      echo "  cd /path/to/rmguard"
+      echo "  git pull"
+      echo "  cd scripts"
+      echo "  sudo ./install.sh"
+    fi
+  fi
+}
+
+show_status() {
+  echo "rmguard Status"
+  echo "=============="
+  echo ""
+  
+  # Check if binary exists
+  if [[ -f /usr/lib/rmguard/rmguard ]]; then
+    echo "✅ Binary installed: /usr/lib/rmguard/rmguard"
+  else
+    echo "❌ Binary not found: /usr/lib/rmguard/rmguard"
+  fi
+  
+  # Check if profile.d script exists
+  if [[ -f /etc/profile.d/rmguard.sh ]]; then
+    echo "✅ Profile script: /etc/profile.d/rmguard.sh"
+  else
+    echo "❌ Profile script not found: /etc/profile.d/rmguard.sh"
+  fi
+  
+  # Check if config exists
+  if [[ -f /etc/rmguard.conf ]]; then
+    echo "✅ Config file: /etc/rmguard.conf"
+  else
+    echo "⚠️  Config file not found: /etc/rmguard.conf (optional)"
+  fi
+  
+  echo ""
+  
+  # Check if rm is a function
+  if type rm 2>/dev/null | grep -q "function"; then
+    echo "✅ rmguard is ACTIVE (rm is a shell function)"
+    echo "   Current RM_GUARD value: ${RM_GUARD:-not set}"
+  else
+    echo "⚠️  rmguard is NOT active in this shell"
+    echo "   Run: source /etc/profile"
+    echo "   Or open a new shell session"
+  fi
+}
+
+# Main command processing
+case "${1:-}" in
+  -h|--help|help)
+    show_help
+    ;;
+  -v|--version|version)
+    show_version
+    ;;
+  -c|--check-updates|check-updates)
+    check_updates
+    ;;
+  -s|--status|status)
+    show_status
+    ;;
+  "")
+    show_help
+    ;;
+  *)
+    echo "Unknown option: $1"
+    echo "Use 'rmguard --help' for usage information."
+    exit 1
+    ;;
+esac

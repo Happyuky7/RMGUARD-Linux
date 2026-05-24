@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# rmguard — blocks dangerous rm usage (e.g. "rm -f /*" or "rm -rf /etc")
+# Designed to be used from **interactive** shells without breaking system scripts.
+set -euo pipefail
+
+# Load optional config
+CONF="/etc/rmguard.conf"
+if [[ -r "$CONF" ]]; then
+  # shellcheck disable=SC1090
+  . "$CONF"
+fi
+
+# Config variables with defaults
+: "${RM_GUARD:=1}"
+: "${ALLOW_TOPLEVEL:=/tmp /var/tmp}"
+
+# Allow forcing: RM_GUARD=0 rm ...
+if [[ "$RM_GUARD" == "0" ]]; then
+  exec /bin/rm "$@"
+fi
+
+guard=1
+args=()
+for a in "$@"; do
+  if [[ "$a" == "--no-guard" ]]; then
+    guard=0
+    continue
+  fi
+  args+=("$a")
+done
+
+# If explicit --no-guard was requested, delegate
+if [[ "$guard" -eq 0 ]]; then
+  exec /bin/rm "${args[@]}"
+fi
+
+# Block dangerous flags
+for a in "${args[@]}"; do
+  if [[ "$a" == "--no-preserve-root" ]]; then
+    echo "rmguard: --no-preserve-root is forbidden." >&2
+    exit 64
+  fi
+done
+
+# Normalize allowed list (safe toplevels like /tmp)
+is_allowed_toplevel() {
+  local p="$1"
+  for ok in $ALLOW_TOPLEVEL; do
+    [[ "$p" == "$ok" ]] && return 0
+  done
+  return 1
+}
+
+block=0
+for p in "${args[@]}"; do
+  # Ignore flags (-r, -f, etc.)
+  [[ "$p" == -* ]] && continue
+
+  # Normalize: remove trailing /
+  p="${p%/}"
+
+  # If pointing to "/" or a top-level directory (/bin, /etc, /var, ...)
+  if [[ "$p" == "/" || "$p" =~ ^/[^/]+$ ]]; then
+    if ! is_allowed_toplevel "$p"; then
+      echo "rmguard: blocked by root-level path '$p'." >&2
+      block=1
+    fi
+  fi
+done
+
+if [[ $block -eq 1 ]]; then
+  echo "Hint: if you REALLY need it, run with 'RM_GUARD=0 rm ...' or add '--no-guard'." >&2
+  exit 64
+fi
+
+# All good → use real /bin/rm
+exec /bin/rm "${args[@]}"
