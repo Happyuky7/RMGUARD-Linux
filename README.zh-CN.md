@@ -1,9 +1,13 @@
-# rmguard
+# RMGuard
 
-🇨🇳 简体中文 | [🇪🇸 Español](README.es.md) | [🇬🇧 English](README.md)
+简体中文 | [Español](README.es.md) | [Portugues](README.pt-BR.md) | [Francais](README.fr.md) | [English](README.md)
 
-**rmguard** 可以防止危险的 `rm` 命令（例如 `rm -f /*` 或 `rm -rf /etc`），而不会破坏系统脚本。
+**RMGuard** 可以防止危险的 `rm` 命令（例如 `rm -f /*` 或 `rm -rf /etc`），而不会破坏系统脚本。
 它仅在交互式 shell 中加载（例如，当用户通过 SSH/TTY 操作时），并允许在真正需要时显式强制执行。
+
+网站和文档：[GitHub Pages](docs/index.html) | [FAQ](docs/FAQ.md) | [命令参考](docs/COMMANDS.md)
+
+作者：[happyuky7.github.io](https://happyuky7.github.io/) | Sponsor：[GitHub Sponsors](https://github.com/sponsors/Happyuky7)
 
 ## 🔒 特性
 
@@ -20,6 +24,7 @@
 
 - [安装](#安装)
 - [快速开始](docs/GETTING_STARTED.md)
+- [FAQ](docs/FAQ.md)
 - [使用](#使用)
 - [命令](#命令)
 - [配置](#配置)
@@ -34,12 +39,12 @@
 
 ## 🚀 安装
 
-**⚠️ 重要**：安装后，rmguard 将在所有新的交互式会话（SSH、终端）中**自动激活**。安装后只需运行一次 `source /etc/profile` 即可在当前会话中激活它。
+**⚠️ 重要**：安装后，RMGuard 将在所有新的交互式会话（SSH、终端）中**自动激活**。安装后只需运行一次 `source /etc/profile` 即可在当前会话中激活它。
 
 ### 方法 1：手动安装（git clone）
 
 ```bash
-git clone https://github.com/Happyuky7/RMGUARD-Linux.git
+git clone -b v1.0.0 https://github.com/Happyuky7/RMGUARD-Linux.git
 cd RMGUARD-Linux
 chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
 sudo bash ./scripts/install.sh
@@ -53,10 +58,10 @@ source /etc/profile
 
 ```bash
 # 下载最新版本
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.2_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_1.0.0_all.deb
 
 # 安装
-sudo apt install ./rmguard_0.0.2_all.deb
+sudo apt install ./rmguard_1.0.0_all.deb
 
 # 在当前会话中激活（仅一次）
 source /etc/profile
@@ -65,7 +70,7 @@ source /etc/profile
 ### ✅ 验证安装
 
 ```bash
-# 验证 rmguard 是否激活
+# 验证 RMGuard 是否激活
 rmguard --status
 
 # 或手动验证
@@ -193,8 +198,8 @@ sudo bash ./test/rmguard_test.sh
 ## 🗑️ 卸载
 
 ```bash
-cd rmguard/scripts
-sudo ./uninstall.sh
+cd RMGUARD-Linux
+sudo bash ./scripts/uninstall.sh
 ```
 
 ---
@@ -278,11 +283,13 @@ rmguard/
 ├─ scripts/
 │  ├─ install.sh              # 手动安装（git clone）
 │  ├─ uninstall.sh            # 手动卸载
-│  └─ package.sh              # 生成 rmguard_0.0.2_all.deb
+│  └─ package.sh              # 生成 rmguard_1.0.0_all.deb
 ├─ test/
 │  └─ rmguard_test.sh         # 快速测试
 ├─ README.md                  # 英文文档
 ├─ README.es.md               # 西班牙文文档
+├─ README.pt-BR.md            # 巴西葡萄牙文文档
+├─ README.fr.md               # 法文文档
 ├─ README.zh-CN.md            # 简体中文文档
 └─ LICENSE
 ```
@@ -312,16 +319,16 @@ rmguard/
 如果您想自己构建 `.deb` 包：
 
 ```bash
-bash ./scripts/package.sh 0.0.2
+bash ./scripts/package.sh 1.0.0
 
 # 包将创建在：
-# build/rmguard_0.0.2_all.deb
+# build/rmguard_1.0.0_all.deb
 ```
 
 创建发布版本：
 
 ```bash
-bash ./scripts/release.sh 0.0.2
+bash ./scripts/release.sh 1.0.0
 ```
 
 ---

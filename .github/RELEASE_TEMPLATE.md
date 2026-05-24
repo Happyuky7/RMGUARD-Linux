@@ -1,6 +1,6 @@
 # Release Notes Template
 
-## rmguard v{VERSION}
+## RMGuard v{VERSION}
 
 **Release Date**: {DATE}
 
@@ -60,7 +60,7 @@ source /etc/profile
 
 ### From previous version:
 
-**Option A: Using rmguard CLI (Automatic)**
+**Option A: Using RMGuard CLI (Automatic)**
 ```bash
 rmguard --check-updates
 # Answer 'y' when prompted
@@ -95,7 +95,7 @@ sudo bash ./scripts/install.sh
 
 ## 🔒 Security Notes
 
-- rmguard protects against dangerous `rm` commands
+- RMGuard protects against dangerous `rm` commands
 - Only active in interactive shells (won't break system scripts)
 - Can be bypassed with `RM_GUARD=0` or `--no-guard` when needed
 
@@ -153,8 +153,12 @@ Thanks to everyone who contributed to this release!
 
 - [English README](https://github.com/Happyuky7/RMGUARD-Linux/blob/main/README.md)
 - [Spanish README](https://github.com/Happyuky7/RMGUARD-Linux/blob/main/README.es.md)
+- [Portuguese README](https://github.com/Happyuky7/RMGUARD-Linux/blob/main/README.pt-BR.md)
+- [French README](https://github.com/Happyuky7/RMGUARD-Linux/blob/main/README.fr.md)
 - [Installation Guide](https://github.com/Happyuky7/RMGUARD-Linux#-installation)
 - [Commands Reference](https://github.com/Happyuky7/RMGUARD-Linux#-commands)
+- [Sponsor](https://github.com/sponsors/Happyuky7)
+- [Author Website](https://happyuky7.github.io/)
 
 ---
 

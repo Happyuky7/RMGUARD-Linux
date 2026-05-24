@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# rmguard-cli — Command line interface for rmguard
+# rmguard-cli — Command line interface for RMGuard
 set -euo pipefail
 
-VERSION="0.0.2"
+VERSION="1.0.0"
 GITHUB_REPO="Happyuky7/RMGUARD-Linux"
 GITHUB_API="https://api.github.com/repos/$GITHUB_REPO/releases/latest"
 
 show_help() {
   cat <<'EOF'
-rmguard - Protection against dangerous rm commands
+RMGuard - Protection against dangerous rm commands
 
 USAGE:
   rmguard [OPTIONS]
@@ -17,13 +17,13 @@ OPTIONS:
   -h, --help              Show this help message
   -v, --version           Show version information
   -c, --check-updates     Check for available updates
-  -s, --status            Show rmguard status
+  -s, --status            Show RMGuard status
   
 EXAMPLES:
   rmguard --help          Display help
   rmguard --version       Show current version
   rmguard --check-updates Check if a new version is available
-  rmguard --status        Check if rmguard is active
+  rmguard --status        Check if RMGuard is active
 
 CONFIGURATION:
   Config file: /etc/rmguard.conf
@@ -48,8 +48,8 @@ EOF
 }
 
 show_version() {
-  echo "rmguard version $VERSION"
-  echo "Copyright (c) 2025 Happyuky7"
+  echo "RMGuard version $VERSION"
+  echo "Copyright (c) 2025-2026 Happyuky7"
   echo "License: MIT"
   echo "Repository: https://github.com/$GITHUB_REPO"
 }
@@ -105,7 +105,7 @@ check_updates() {
       TEMP_DIR=$(mktemp -d)
       cd "$TEMP_DIR"
       
-      echo "1/4 Downloading rmguard v$LATEST_VERSION..."
+      echo "1/4 Downloading RMGuard v$LATEST_VERSION..."
       if ! git clone --depth 1 --branch "v$LATEST_VERSION" "https://github.com/$GITHUB_REPO.git" rmguard 2>/dev/null; then
         echo "   ⚠️  Tag v$LATEST_VERSION not found, trying without 'v' prefix..."
         if ! git clone --depth 1 --branch "$LATEST_VERSION" "https://github.com/$GITHUB_REPO.git" rmguard 2>/dev/null; then
@@ -115,13 +115,13 @@ check_updates() {
       fi
       
       echo "2/4 Entering directory..."
-      cd rmguard/scripts
+      cd rmguard
       
       echo "3/4 Running installation..."
       if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-        sudo ./install.sh
+        sudo bash ./scripts/install.sh
       else
-        ./install.sh
+        bash ./scripts/install.sh
       fi
       
       echo "4/4 Cleaning up..."
@@ -136,16 +136,15 @@ check_updates() {
     else
       echo ""
       echo "Update cancelled. To update manually:"
-      echo "  cd /path/to/rmguard"
+      echo "  cd /path/to/RMGUARD-Linux"
       echo "  git pull"
-      echo "  cd scripts"
-      echo "  sudo ./install.sh"
+      echo "  sudo bash ./scripts/install.sh"
     fi
   fi
 }
 
 show_status() {
-  echo "rmguard Status"
+  echo "RMGuard Status"
   echo "=============="
   echo ""
   
@@ -175,10 +174,10 @@ show_status() {
   # External commands cannot inspect parent-shell functions directly, so the
   # profile hook exports this marker when it loads the rm wrapper.
   if [[ "${RM_GUARD_SHELL_LOADED:-0}" == "1" ]]; then
-    echo "✅ rmguard is ACTIVE in this shell"
+    echo "✅ RMGuard is ACTIVE in this shell"
     echo "   Current RM_GUARD value: ${RM_GUARD:-not set}"
   else
-    echo "⚠️  rmguard is NOT active in this shell"
+    echo "⚠️  RMGuard is NOT active in this shell"
     echo "   Run: source /etc/profile"
     echo "   Or open a new shell session"
   fi

@@ -1,9 +1,13 @@
-# rmguard
+# RMGuard
 
-[🇪🇸 Español](README.es.md) | [🇨🇳 简体中文](README.zh-CN.md) | 🇬🇧 English
+[Español](README.es.md) | [Portugues](README.pt-BR.md) | [Francais](README.fr.md) | [简体中文](README.zh-CN.md) | English
 
-**rmguard** protects against dangerous `rm` commands (e.g., `rm -f /*` or `rm -rf /etc`) without breaking system scripts.  
+**RMGuard** protects against dangerous `rm` commands (e.g., `rm -f /*` or `rm -rf /etc`) without breaking system scripts.
 It loads only in interactive shells (e.g., when a person is on SSH/TTY) and allows explicit forcing if you really need it.
+
+Website and docs: [GitHub Pages](docs/index.html) | [FAQ](docs/FAQ.md) | [Command Reference](docs/COMMANDS.md)
+
+Author: [happyuky7.github.io](https://happyuky7.github.io/) | Sponsor: [GitHub Sponsors](https://github.com/sponsors/Happyuky7)
 
 ## 🔒 Features
 
@@ -20,6 +24,7 @@ It loads only in interactive shells (e.g., when a person is on SSH/TTY) and allo
 
 - [Installation](#installation)
 - [Getting Started](docs/GETTING_STARTED.md)
+- [FAQ](docs/FAQ.md)
 - [Usage](#usage)
 - [Commands](#commands)
 - [Configuration](#configuration)
@@ -34,12 +39,12 @@ It loads only in interactive shells (e.g., when a person is on SSH/TTY) and allo
 
 ## 🚀 Installation
 
-**⚠️ Important**: Once installed, rmguard will be **automatically active** in all new interactive sessions (SSH, terminal). You only need to run `source /etc/profile` **once** to activate it in the current session after installation.
+**⚠️ Important**: Once installed, RMGuard will be **automatically active** in all new interactive sessions (SSH, terminal). You only need to run `source /etc/profile` **once** to activate it in the current session after installation.
 
 ### Method 1: Manual installation (git clone)
 
 ```bash
-git clone https://github.com/Happyuky7/RMGUARD-Linux.git
+git clone -b v1.0.0 https://github.com/Happyuky7/RMGUARD-Linux.git
 cd RMGUARD-Linux
 chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
 sudo bash ./scripts/install.sh
@@ -54,10 +59,10 @@ If a `.deb` package is attached to the release, download it from
 
 ```bash
 # Download the latest release
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_0.0.2_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/latest/download/rmguard_1.0.0_all.deb
 
 # Install
-sudo apt install ./rmguard_0.0.2_all.deb
+sudo apt install ./rmguard_1.0.0_all.deb
 
 # Activate it in the current session (only once)
 source /etc/profile
@@ -66,7 +71,7 @@ source /etc/profile
 ### ✅ Verify installation
 
 ```bash
-# Check if rmguard is active
+# Check if RMGuard is active
 rmguard --status
 
 # Or verify manually
@@ -119,7 +124,7 @@ rmguard --version
 rmguard -v
 ```
 
-### Check rmguard status
+### Check RMGuard status
 
 ```bash
 rmguard --status
@@ -143,7 +148,7 @@ rmguard -c
 |---------|-------|-------------|
 | `rmguard --help` | `-h` | Show complete help menu |
 | `rmguard --version` | `-v` | Show installed version |
-| `rmguard --status` | `-s` | Check if rmguard is active |
+| `rmguard --status` | `-s` | Check if RMGuard is active |
 | `rmguard --check-updates` | `-c` | Check for updates and install them |
 
 ### Disable rmguard temporarily
@@ -194,8 +199,8 @@ sudo bash ./test/rmguard_test.sh
 ## 🗑️ Uninstallation
 
 ```bash
-cd rmguard/scripts
-sudo ./uninstall.sh
+cd RMGUARD-Linux
+sudo bash ./scripts/uninstall.sh
 ```
 
 ---
@@ -247,7 +252,7 @@ echo $RM_GUARD
 ### "My script doesn't go through rmguard"
 If it uses `/bin/rm` (absolute path) or `command rm`, it bypasses the shell function. **Recommendation**: in your own scripts use `rm` without path.
 
-### "rmguard doesn't activate after install"
+### "RMGuard doesn't activate after install"
 Open a new session or run `source /etc/profile`. Verify with:
 
 ```bash
@@ -279,11 +284,13 @@ rmguard/
 ├─ scripts/
 │  ├─ install.sh              # manual installation (git clone)
 │  ├─ uninstall.sh            # manual uninstallation
-│  └─ package.sh              # generates rmguard_0.0.2_all.deb
+│  └─ package.sh              # generates rmguard_1.0.0_all.deb
 ├─ test/
 │  └─ rmguard_test.sh         # quick tests
 ├─ README.md                  # documentation (English)
 ├─ README.es.md               # documentation (Spanish)
+├─ README.pt-BR.md            # documentation (Brazilian Portuguese)
+├─ README.fr.md               # documentation (French)
 ├─ README.zh-CN.md            # documentation (Simplified Chinese)
 └─ LICENSE
 ```
@@ -313,16 +320,16 @@ Contributions are welcome! Please:
 If you want to build the `.deb` package yourself:
 
 ```bash
-bash ./scripts/package.sh 0.0.2
+bash ./scripts/package.sh 1.0.0
 
 # The package will be created at:
-# build/rmguard_0.0.2_all.deb
+# build/rmguard_1.0.0_all.deb
 ```
 
 For creating releases:
 
 ```bash
-bash ./scripts/release.sh 0.0.2
+bash ./scripts/release.sh 1.0.0
 ```
 
 ---
@@ -340,4 +347,4 @@ This software is an additional protection layer but is **NOT** infallible. Alway
 
 ---
 
-**Developed with ❤️ by [Happyuky7](https://github.com/Happyuky7) to protect your Linux systems**
+**Developed by [Happyuky7](https://github.com/Happyuky7) to protect your Linux systems**

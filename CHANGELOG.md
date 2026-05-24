@@ -2,6 +2,24 @@
 
 All notable changes to this project are documented here.
 
+## [1.0.0] - 2026-05-24
+
+First stable release.
+
+### Added
+
+- Stable documentation entry points for the website, FAQ, command reference,
+  and release notes.
+- GitHub Pages static site for RMGuard.
+- Additional README translations in Brazilian Portuguese and French.
+- Sponsorship and project website links.
+
+### Changed
+
+- Promoted RMGuard from the `0.0.x` pre-release cycle to `1.0.0`.
+- Updated install, package, and release commands to use `v1.0.0`.
+- Standardized the visible project name as `RMGuard`.
+
 ## [0.0.2] - 2026-05-24
 
 Patch pre-release after the first Linux install test.

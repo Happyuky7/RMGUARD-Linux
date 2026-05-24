@@ -1,7 +1,7 @@
-# Getting Started
+# RMGuard Getting Started
 
 This guide covers the quickest path to install, verify, use, and package
-rmguard.
+RMGuard.
 
 ## Requirements
 
@@ -13,7 +13,7 @@ rmguard.
 ## Install From Source
 
 ```bash
-git clone https://github.com/Happyuky7/RMGUARD-Linux.git
+git clone -b v1.0.0 https://github.com/Happyuky7/RMGUARD-Linux.git
 cd RMGUARD-Linux
 chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
 sudo bash ./scripts/install.sh
@@ -25,8 +25,8 @@ source /etc/profile
 Use this only if the `.deb` asset has been uploaded to the release.
 
 ```bash
-wget https://github.com/Happyuky7/RMGUARD-Linux/releases/download/v0.0.2/rmguard_0.0.2_all.deb
-sudo apt install ./rmguard_0.0.2_all.deb
+wget https://github.com/Happyuky7/RMGUARD-Linux/releases/download/v1.0.0/rmguard_1.0.0_all.deb
+sudo apt install ./rmguard_1.0.0_all.deb
 source /etc/profile
 ```
 
@@ -39,7 +39,7 @@ type rm
 ```
 
 `type rm` may show the friendly alias first. `rmguard --status` should report
-that rmguard is active in the current shell.
+that RMGuard is active in the current shell.
 
 ## Try It Safely
 
@@ -75,28 +75,28 @@ Then open a new shell or run:
 source /etc/profile
 ```
 
-## Build v0.0.2 Package
+## Build v1.0.0 Package
 
 ```bash
-bash ./scripts/package.sh 0.0.2
+bash ./scripts/package.sh 1.0.0
 ```
 
 The package is created at:
 
 ```text
-build/rmguard_0.0.2_all.deb
+build/rmguard_1.0.0_all.deb
 ```
 
-## Prepare v0.0.2 Release
+## Prepare v1.0.0 Release
 
 ```bash
-bash ./scripts/release.sh 0.0.2
+bash ./scripts/release.sh 1.0.0
 ```
 
 Before publishing, check:
 
-- `rmguard --version` prints `0.0.2`
+- `rmguard --version` prints `1.0.0`
 - `rmguard --status` works after install
 - Dangerous top-level paths are blocked
 - `/tmp` and `/var/tmp` still work
-- `CHANGELOG.md` and `docs/releases/v0.0.2.md` match the release
+- `CHANGELOG.md` and `docs/releases/v1.0.0.md` match the release

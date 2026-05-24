@@ -2,7 +2,7 @@
 # Builds rmguard_X.X.X_all.deb (or the version you pass as arg) and leaves it in build/
 set -euo pipefail
 
-VER="${1:-0.0.2}"
+VER="${1:-1.0.0}"
 PKG="rmguard"
 ARCH="all"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

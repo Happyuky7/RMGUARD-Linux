@@ -1,4 +1,4 @@
-# rmguard - Command Reference
+# RMGuard Command Reference
 
 Complete list of all available commands and options.
 
@@ -55,7 +55,7 @@ rmguard -v
 
 ### `rmguard --status` / `rmguard -s`
 
-Checks if rmguard is active and properly installed.
+Checks if RMGuard is active and properly installed.
 
 **Usage:**
 ```bash
@@ -94,9 +94,9 @@ rmguard -c
 $ rmguard --check-updates
 Checking for updates...
 Current version: 0.0.1
-Latest version:  0.0.2
+Latest version:  1.0.1
 
-🔔 New version available: 0.0.2
+🔔 New version available: 1.0.1
 
 Release notes: https://github.com/Happyuky7/RMGUARD-Linux/releases/latest
 
@@ -111,7 +111,7 @@ Do you want to install this update now? (y/N): y
 
 ## rm Command (Protected)
 
-When rmguard is active, the `rm` command is protected.
+When RMGuard is active, the `rm` command is protected.
 
 ### Normal Usage
 
@@ -190,7 +190,7 @@ command rm -rf /path
 
 ### `RM_GUARD`
 
-Controls whether rmguard is active.
+Controls whether RMGuard is active.
 
 **Values:**
 - `1` - Active (default)
@@ -268,7 +268,7 @@ source /etc/profile
 
 ```bash
 # From .deb
-sudo apt install ./rmguard_0.0.2_all.deb
+sudo apt install ./rmguard_1.0.0_all.deb
 
 # From source
 sudo bash ./scripts/install.sh
@@ -291,8 +291,8 @@ type rm
 
 ```bash
 # If installed from source
-cd rmguard/scripts
-sudo ./uninstall.sh
+cd RMGUARD-Linux
+sudo bash ./scripts/uninstall.sh
 
 # If installed from .deb
 sudo apt remove rmguard
@@ -346,4 +346,4 @@ sudo bash ./test/rmguard_test.sh
 ---
 
 **Last Updated**: May 24, 2026  
-**Version**: 0.0.2
+**Version**: 1.0.0
