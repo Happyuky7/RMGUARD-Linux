@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RMGuard Getting Started</title>
+    <meta name="description" content="Install, verify, use, and package RMGuard.">
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body class="doc-shell">
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="index.html">
+          <img src="assets/rmguard-logo.png" alt="RMGuard logo">
+          <span>RMGuard</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#install">Install</a>
+          <a href="COMMANDS.html">Commands</a>
+          <a href="FAQ.html">FAQ</a>
+          <a class="sponsor-link" href="https://github.com/sponsors/Happyuky7">Sponsor &lt;3</a>
+          <a href="https://github.com/Happyuky7/RMGUARD-Linux">GitHub</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </div>
+      </nav>
+    </header>
+    <main class="doc-page">
+      <aside class="doc-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a>
+        <a href="GETTING_STARTED.html">Getting Started</a>
+        <a href="COMMANDS.html">Command Reference</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="releases/v1.0.0.html">Release v1.0.0</a>
+      </aside>
+      <article class="doc-content">
+        <h1>RMGuard Getting Started</h1>
+        <p>This guide covers the quickest path to install, verify, use, and package RMGuard.</p>
+
+        <h2>Requirements</h2>
+        <ul>
+          <li>Linux with bash</li>
+          <li><code>sudo</code> access for installation</li>
+          <li><code>coreutils</code> for <code>/bin/rm</code></li>
+          <li><code>dpkg-deb</code> if you want to build a <code>.deb</code> package</li>
+        </ul>
+
+        <h2>Install From Source</h2>
+        <div class="terminal" aria-label="Bash install commands">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <strong>bash</strong>
+          </div>
+          <pre><code><span class="prompt">$</span> git clone -b v1.0.0 https://github.com/Happyuky7/RMGUARD-Linux.git
+<span class="prompt">$</span> cd RMGUARD-Linux
+<span class="prompt">$</span> chmod +x scripts/*.sh src/rmguard src/rmguard-cli test/rmguard_test.sh
+<span class="prompt">$</span> sudo bash ./scripts/install.sh
+<span class="prompt">$</span> source /etc/profile</code></pre>
+        </div>
+
+        <h2>Install From Release Package</h2>
+        <p>Use this only if the <code>.deb</code> asset has been uploaded to the release.</p>
+        <div class="terminal" aria-label="Bash package install commands">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <strong>bash</strong>
+          </div>
+          <pre><code><span class="prompt">$</span> wget https://github.com/Happyuky7/RMGUARD-Linux/releases/download/v1.0.0/rmguard_1.0.0_all.deb
+<span class="prompt">$</span> sudo apt install ./rmguard_1.0.0_all.deb
+<span class="prompt">$</span> source /etc/profile</code></pre>
+        </div>
+
+        <h2>Verify</h2>
+        <div class="terminal" aria-label="Bash verify commands">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <strong>bash</strong>
+          </div>
+          <pre><code><span class="prompt">$</span> rmguard --version
+<span class="prompt">$</span> rmguard --status
+<span class="prompt">$</span> type rm</code></pre>
+        </div>
+        <p><code>type rm</code> may show the friendly alias first. <code>rmguard --status</code> should report that RMGuard is active in the current shell.</p>
+
+        <h2>Try It Safely</h2>
+        <pre><code>touch /tmp/rmguard-test
+rm /tmp/rmguard-test
+
+rm -rf /etc</code></pre>
+        <p>The <code>/tmp</code> command should work. The <code>/etc</code> command should be blocked.</p>
+
+        <h2>Bypass Deliberately</h2>
+        <p>Use a bypass only when you know exactly what you are deleting.</p>
+        <pre><code>RM_GUARD=0 rm -rf /path
+rm --no-guard -rf /path</code></pre>
+
+        <h2>Configure Allowed Top-Level Paths</h2>
+        <p>Edit <code>/etc/rmguard.conf</code>:</p>
+        <pre><code>ALLOW_TOPLEVEL="/tmp /var/tmp"</code></pre>
+        <p>Then open a new shell or run:</p>
+        <pre><code>source /etc/profile</code></pre>
+
+        <h2>Build v1.0.0 Package</h2>
+        <div class="terminal" aria-label="Bash package build command">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <strong>bash</strong>
+          </div>
+          <pre><code><span class="prompt">$</span> bash ./scripts/package.sh 1.0.0</code></pre>
+        </div>
+        <p>The package is created at <code>build/rmguard_1.0.0_all.deb</code>.</p>
+
+        <h2>Prepare v1.0.0 Release</h2>
+        <div class="terminal" aria-label="Bash release command">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <strong>bash</strong>
+          </div>
+          <pre><code><span class="prompt">$</span> bash ./scripts/release.sh 1.0.0</code></pre>
+        </div>
+        <p>Before publishing, verify the version, status command, blocked dangerous paths, allowed temporary paths, changelog, and release notes.</p>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RMGuard FAQ</title>
+    <meta name="description" content="Frequently asked questions about RMGuard.">
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body class="doc-shell">
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="index.html">
+          <img src="assets/rmguard-logo.png" alt="RMGuard logo">
+          <span>RMGuard</span>
+        </a>
+        <div class="nav-links">
+          <a href="GETTING_STARTED.html">Getting Started</a>
+          <a href="COMMANDS.html">Commands</a>
+          <a class="sponsor-link" href="https://github.com/sponsors/Happyuky7">Sponsor &lt;3</a>
+          <a href="https://github.com/Happyuky7/RMGUARD-Linux">GitHub</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </div>
+      </nav>
+    </header>
+    <main class="doc-page">
+      <aside class="doc-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a>
+        <a href="GETTING_STARTED.html">Getting Started</a>
+        <a href="COMMANDS.html">Command Reference</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="releases/v1.0.0.html">Release v1.0.0</a>
+      </aside>
+      <article class="doc-content">
+        <h1>RMGuard FAQ</h1>
+
+        <h2>General</h2>
+        <h3>What is RMGuard?</h3>
+        <p>RMGuard is a shell-level safety guard for interactive Linux sessions. It wraps the <code>rm</code> command with a shell function and blocks dangerous top-level deletion targets such as <code>/</code>, <code>/etc</code>, <code>/bin</code>, and <code>/usr</code>.</p>
+
+        <h3>Does RMGuard replace <code>/bin/rm</code>?</h3>
+        <p>No. RMGuard loads an <code>rm</code> shell function in interactive shells and delegates safe commands to <code>/bin/rm</code>.</p>
+
+        <h3>Is RMGuard a backup tool?</h3>
+        <p>No. RMGuard is only a protection layer for accidental destructive commands. It does not replace backups, snapshots, permissions, or recovery planning.</p>
+
+        <h2>Installation</h2>
+        <h3>Why does the documentation use <code>sudo bash ./scripts/install.sh</code>?</h3>
+        <p>It works even if the script was cloned without executable permissions. The docs also include <code>chmod +x</code> so scripts can be executed directly afterward.</p>
+
+        <h3>Why does <code>git clone -b v1.0.0</code> show detached HEAD?</h3>
+        <p>That is normal when cloning a tag. Release tags are fixed snapshots, not active branches.</p>
+
+        <h3>Why do I need <code>source /etc/profile</code>?</h3>
+        <p>The install script copies the profile hook to <code>/etc/profile.d/rmguard.sh</code>. Running <code>source /etc/profile</code> loads it in the current shell. New terminal or SSH sessions load it automatically.</p>
+
+        <h2>Behavior</h2>
+        <h3>Why is <code>/tmp</code> allowed by default?</h3>
+        <p>RMGuard allows <code>/tmp</code> and <code>/var/tmp</code> by default because they are common temporary work areas. This is configurable in <code>/etc/rmguard.conf</code>.</p>
+        <pre><code>mkdir -p /tmp/rmguard-test
+rm -rf /tmp/rmguard-test</code></pre>
+
+        <h3>Can I make <code>/tmp</code> blocked too?</h3>
+        <p>Yes. Edit <code>/etc/rmguard.conf</code> and remove <code>/tmp</code> from <code>ALLOW_TOPLEVEL</code>.</p>
+        <pre><code>ALLOW_TOPLEVEL="/var/tmp"
+source /etc/profile</code></pre>
+
+        <h3>Why did <code>rm -rf /tmp</code> remove <code>/tmp</code>?</h3>
+        <p>In the default configuration, <code>/tmp</code> is explicitly allowed. If you want stricter behavior, remove <code>/tmp</code> from <code>ALLOW_TOPLEVEL</code>.</p>
+
+        <h3>Why does a script using <code>/bin/rm</code> bypass RMGuard?</h3>
+        <p>RMGuard works through a shell function named <code>rm</code>. Absolute paths such as <code>/bin/rm</code> and commands such as <code>command rm</code> intentionally bypass shell functions.</p>
+
+        <h2>Bypass And Safety</h2>
+        <pre><code>RM_GUARD=0 rm -rf /path
+rm --no-guard -rf /path</code></pre>
+        <p>Use a bypass only when you are sure about the target.</p>
+
+        <h2>Releases</h2>
+        <h3>Should I use <code>v1.0.0</code> or <code>1.0.0</code>?</h3>
+        <p>Use <code>v1.0.0</code> for the Git tag and GitHub Release. Use <code>1.0.0</code> for the internal version and package name, such as <code>rmguard_1.0.0_all.deb</code>.</p>
+
+        <h3>Where can I support the project?</h3>
+        <p><a href="https://github.com/sponsors/Happyuky7">Sponsor Happyuky7 on GitHub &lt;3</a></p>
+      </article>
+    </main>
+  </body>
+</html>

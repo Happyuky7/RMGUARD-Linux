@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RMGuard GitHub Pages Setup</title>
+    <meta name="description" content="GitHub Pages setup notes for RMGuard.">
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body class="doc-shell">
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="index.html">
+          <img src="assets/rmguard-logo.png" alt="RMGuard logo">
+          <span>RMGuard</span>
+        </a>
+        <div class="nav-links">
+          <a href="GETTING_STARTED.html">Getting Started</a>
+          <a href="COMMANDS.html">Commands</a>
+          <a href="FAQ.html">FAQ</a>
+          <a class="sponsor-link" href="https://github.com/sponsors/Happyuky7">Sponsor &lt;3</a>
+          <a href="https://github.com/Happyuky7/RMGUARD-Linux">GitHub</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </div>
+      </nav>
+    </header>
+    <main class="doc-page">
+      <aside class="doc-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a>
+        <a href="GETTING_STARTED.html">Getting Started</a>
+        <a href="COMMANDS.html">Command Reference</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="GITHUB_PAGES.html">GitHub Pages Setup</a>
+        <a href="releases/v1.0.0.html">Release v1.0.0</a>
+      </aside>
+      <article class="doc-content">
+        <h1>RMGuard GitHub Pages Setup</h1>
+        <p>The RMGuard website is served from the <code>docs/</code> directory.</p>
+
+        <h2>Recommended Settings</h2>
+        <ol>
+          <li>Open the GitHub repository settings.</li>
+          <li>Go to <strong>Pages</strong>.</li>
+          <li>Set the source to the <code>master</code> branch.</li>
+          <li>Set the folder to <code>/docs</code>.</li>
+          <li>Save and wait for GitHub Pages to deploy.</li>
+        </ol>
+
+        <h2>Public Pages</h2>
+        <ul>
+          <li><code>index.html</code> is the landing page.</li>
+          <li><code>GETTING_STARTED.html</code> is the install guide.</li>
+          <li><code>COMMANDS.html</code> is the command reference.</li>
+          <li><code>FAQ.html</code> is the FAQ.</li>
+          <li><code>releases/v1.0.0.html</code> is the stable release page.</li>
+        </ul>
+
+        <h2>Markdown Files</h2>
+        <p>The <code>.md</code> files stay in the repository as source documentation. The public website links to the matching <code>.html</code> files so the pages load with the RMGuard stylesheet.</p>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RMGuard Command Reference</title>
+    <meta name="description" content="Command reference for RMGuard.">
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body class="doc-shell">
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="index.html">
+          <img src="assets/rmguard-logo.png" alt="RMGuard logo">
+          <span>RMGuard</span>
+        </a>
+        <div class="nav-links">
+          <a href="GETTING_STARTED.html">Getting Started</a>
+          <a href="FAQ.html">FAQ</a>
+          <a class="sponsor-link" href="https://github.com/sponsors/Happyuky7">Sponsor &lt;3</a>
+          <a href="https://github.com/Happyuky7/RMGUARD-Linux">GitHub</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </div>
+      </nav>
+    </header>
+    <main class="doc-page">
+      <aside class="doc-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a>
+        <a href="GETTING_STARTED.html">Getting Started</a>
+        <a href="COMMANDS.html">Command Reference</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="releases/v1.0.0.html">Release v1.0.0</a>
+      </aside>
+      <article class="doc-content">
+        <h1>RMGuard Command Reference</h1>
+        <p>Complete list of the main user-facing RMGuard commands and options.</p>
+
+        <h2>Main Commands</h2>
+        <h3><code>rmguard --help</code> / <code>rmguard -h</code></h3>
+        <p>Shows the complete help menu, including usage, options, configuration, bypass methods, and repository links.</p>
+        <pre><code>rmguard --help
+rmguard -h</code></pre>
+
+        <h3><code>rmguard --version</code> / <code>rmguard -v</code></h3>
+        <p>Shows the current installed version, copyright, license, and repository URL.</p>
+        <pre><code>rmguard --version
+rmguard -v</code></pre>
+
+        <h3><code>rmguard --status</code> / <code>rmguard -s</code></h3>
+        <p>Checks whether RMGuard is installed and active in the current shell.</p>
+        <pre><code>rmguard --status
+rmguard -s</code></pre>
+
+        <h3><code>rmguard --check-updates</code> / <code>rmguard -c</code></h3>
+        <p>Checks GitHub releases, compares versions, and can install an available update.</p>
+        <pre><code>rmguard --check-updates
+rmguard -c</code></pre>
+
+        <h2>Protected <code>rm</code> Usage</h2>
+        <h3>Normal Usage</h3>
+        <pre><code>rm file.txt
+rm -r directory/
+rm -f *.tmp
+rm /tmp/test.txt</code></pre>
+
+        <h3>Blocked Commands</h3>
+        <pre><code>rm -rf /
+rm -rf /etc
+rm -rf /bin
+rm -rf /var
+rm -rf /usr
+rm --no-preserve-root /</code></pre>
+
+        <h2>Bypass Methods</h2>
+        <pre><code>RM_GUARD=0 rm -rf /dangerous/path
+rm --no-guard -rf /dangerous/path
+unset -f rm
+export RM_GUARD=0
+/bin/rm -rf /path
+command rm -rf /path</code></pre>
+        <p>Use bypass methods only when you know exactly what you are deleting.</p>
+
+        <h2>Environment Variables</h2>
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>RM_GUARD</code></td><td>Controls whether RMGuard is active. Use <code>1</code> for active and <code>0</code> for disabled.</td></tr>
+            <tr><td><code>ALLOW_TOPLEVEL</code></td><td>Defines top-level paths allowed by configuration.</td></tr>
+            <tr><td><code>RM_GUARD_SHELL_LOADED</code></td><td>Internal marker exported when the shell wrapper is loaded.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Configuration File</h2>
+        <p>RMGuard reads configuration from <code>/etc/rmguard.conf</code>.</p>
+        <pre><code># Disable globally (not recommended)
+# RM_GUARD=0
+
+# Allowed top-level paths
+ALLOW_TOPLEVEL="/tmp /var/tmp"</code></pre>
+
+        <h2>Install, Activate, Verify</h2>
+        <pre><code>sudo bash ./scripts/install.sh
+source /etc/profile
+rmguard --status
+type rm</code></pre>
+
+        <h2>Uninstall</h2>
+        <pre><code>cd RMGUARD-Linux
+sudo bash ./scripts/uninstall.sh</code></pre>
+
+        <h2>Summary</h2>
+        <table>
+          <thead>
+            <tr><th>Command</th><th>Shortcut</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>rmguard --help</code></td><td><code>-h</code></td><td>Show help</td></tr>
+            <tr><td><code>rmguard --version</code></td><td><code>-v</code></td><td>Show version</td></tr>
+            <tr><td><code>rmguard --status</code></td><td><code>-s</code></td><td>Check status</td></tr>
+            <tr><td><code>rmguard --check-updates</code></td><td><code>-c</code></td><td>Check updates</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </main>
+  </body>
+</html>
